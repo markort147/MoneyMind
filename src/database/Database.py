@@ -1,4 +1,5 @@
 import sqlite3
+import os
 import pandas as pd
 from ..Config import Config
 
@@ -12,7 +13,9 @@ class Database:
         self.cursor = None
 
     def open_connection(self):
-        print(self.db_name)
+        db_directory = os.path.dirname(self.db_name)
+        if not os.path.exists(db_directory):
+            os.makedirs(db_directory)
         self.connection = sqlite3.connect(self.db_name)
         self.cursor = self.connection.cursor()
 
