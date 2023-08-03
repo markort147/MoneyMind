@@ -1,20 +1,48 @@
 import datetime
+import pandas as pd
 from src.database.Database import Database
 
 
 def add_transaction(database):
-    amount = float(input("Importo: "))
-    category = input("Categoria: ")
-    payment_method = input("Mezzo di pagamento: ")
-    date_str = input("Data (YYYY-MM-DD): ")
+    amount = float(input("Amount: "))
+    description = input("Description: ")
+    recipient = input("Recipient: ")
+    date_input = input("Date (YYYY-MM-DD): ")
+    installment = input("Installment: ")
+    category = input("Category: ")
+    priority = input("Priority: ")
+    automatic = input("Automatic: ")
+    method = input("Method: ")
+    account = input("Account: ")
+    tags = input("Tags (semicolon delimiter): ")
+
+    if description == '':
+        description = ''
+
+    if date_input == '':
+        date_input = datetime.date.today().strftime("%Y-%m-%d")
+
+    if installment == '':
+        installment = 0
+    else:
+        installment = int(installment)
+
+    if priority == '':
+        priority = 'Voluntary'
+
+    if automatic == '':
+        automatic = 0
+    else:
+        automatic = int(automatic)
+
     try:
-        date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+        datetime.datetime.strptime(date_input, '%Y-%m-%d').date()
     except ValueError:
         print("Data non valida. Utilizzare il formato YYYY-MM-DD.")
         return
 
-    database.insert_transaction(amount, category, payment_method, date)
-    print("Transazione aggiunta con successo!")
+    database.insert_transaction(amount, description, recipient, date_input, installment, category, priority, automatic, method, account, tags)
+    print("Success!")
 
 
 def main():
@@ -34,7 +62,8 @@ def main():
             add_transaction(db)
         if choice == "2":
             transactions = db.get_all_transactions(as_dataframe=True)
-            print(transactions)
+            pd.set_option('display.max_columns', None)
+            print(transactions.to_string())
         if choice == "3":
             id_row = input("ID: ")
             db.remove_transaction(id_row)

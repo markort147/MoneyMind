@@ -1,10 +1,11 @@
 -- Creazione della vista "transactions_view"
-CREATE VIEW transactions_view AS
+CREATE VIEW IF NOT EXISTS transactions_view  AS
 SELECT
     t.id AS transaction_id,
+    t.amount,
     t.description,
     r.recipient_name,
-    r.recipient_type,
+    --r.recipient_type,
     t.date,
     t.installment,
     c.category_name,
