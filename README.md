@@ -17,9 +17,6 @@ A simple Python app to manage own finances
 - database/
   - \_\_init\_\_.py
   - sqlite_repository.py
-- interfaces/
-  - \_\_init\_\_.py
-  - transaction_repository.py
 - data/
   - config.yaml
   - sqlite3.db
@@ -29,4 +26,5 @@ A simple Python app to manage own finances
 - utils/
   - \_\_init\_\_.py
   - pandas_utils.py
+- tests/
 - main.py
