@@ -3,6 +3,9 @@ A simple Python app to manage own finances
 
 # Package Directory Structure
 
+- config/
+  - \_\_init\_\_.py
+  - config.py
 - core/
   - \_\_init\_\_.py
   - transaction.py
