@@ -1,2 +1,29 @@
 # MoneyMind
 A simple Python app to manage own finances
+
+# Package Directory Structure
+
+- core/
+  - \_\_init\_\_.py
+  - transaction.py
+  - category.py
+  - recipient.py
+  - account.py
+  - tag.py
+  - transaction_repository.py
+- database/
+  - \_\_init\_\_.py
+  - sqlite_repository.py
+- interfaces/
+  - \_\_init\_\_.py
+  - transaction_repository.py
+- data/
+  - config.yaml
+  - sqlite3.db
+- ui/
+  - \_\_init\_\_.py
+  - command_line.py
+- utils/
+  - \_\_init\_\_.py
+  - pandas_utils.py
+- main.py
