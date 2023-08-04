@@ -107,7 +107,7 @@ def add_transaction(database):
         tags = input("Tags (semicolon delimiter): ")
         pattern = r'^(|[\w]+|[\w]+(;[\w]+)*)$'
         if re.match(pattern, tags) is not None:
-            print("\tInserted tags: {:.3f}".format(amount))
+            print("\tInserted tags: {}".format(tags))
             break
         else:
             print("\tInvalid format!")
