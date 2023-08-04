@@ -70,6 +70,7 @@ def main():
         elif choice == "0":
             print("Ciao ciao :)")
             db.close_connection()
+            break
         else:
             print("Scelta non valida. Riprova.")
 
