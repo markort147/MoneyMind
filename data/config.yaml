@@ -1,0 +1,28 @@
+database:
+  file: './data/sqlite3.db'
+  init_script: './data/sqlite_scripts/init.sql'
+#  tables:
+#    tags:
+#      name: "tags"
+#      create_script: "create_table_tags.sql"
+#    accounts:
+#      name: "accounts"
+#      create_script: "create_table_accounts.sql"
+#    recipients:
+#      name: "recipients"
+#      create_script: "create_table_recipients.sql"
+#    methods:
+#      name: "methods"
+#      create_script: "create_table_methods.sql"
+#    categories:
+#      name: "categories"
+#      create_script: "create_table_categories.sql"
+#    transactions:
+#      name: "transactions"
+#      create_script: "create_table_transactions.sql"
+#    transaction_tags:
+#      name: "transaction_tags"
+#      create_script: "create_table_transaction_tags.sql"
+#    transactions_view:
+#      name: "transactions_tags"
+#      create_script: "create_view_transactions_view.sql"

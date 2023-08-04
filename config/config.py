@@ -7,7 +7,7 @@ class Config:
     def __init__(self):
         if hasattr(self, 'config_data'):
             return
-        with open('./src/config.yaml', 'r') as file:
+        with open('./data/config.yaml', 'r') as file:
             self.config_data = yaml.safe_load(file)
 
     def __new__(cls):
@@ -16,7 +16,7 @@ class Config:
         return cls._instance
 
     def load_config(self):
-        with open('./src/config.yaml', 'r') as file:
+        with open('./data/config.yaml', 'r') as file:
             self.config_data = yaml.safe_load(file)
 
     @classmethod

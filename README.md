@@ -17,7 +17,9 @@ A simple Python app to manage own finances
 - database/
   - \_\_init\_\_.py
   - sqlite_repository.py
-- data/
+- data/ 
+  - sqlite_scripts/
+    - init.sql 
   - config.yaml
   - sqlite3.db
 - ui/

@@ -1,7 +1,7 @@
 import sqlite3
 import os
 import pandas as pd
-from ..Config import Config
+from config.config import Config
 
 
 # todo creare una classe Transaction per gestire l'inserimento e l'estrazione di transaction
@@ -37,17 +37,16 @@ class Database:
 
     def execute_create_no_out_from_file(self, file_path):
         with open(file_path, 'r') as file:
-            self.execute_query_no_out(file.read())
+            scripts = file.read().split(';')
+            for script in scripts:
+                self.execute_query_no_out(script)
 
     def initialize_database(self):
-        tables = self.config.get_property('database')['tables']
-        base_path = self.config.get_property('database')['scripts']
-        for key, value in tables.items():
-            self.execute_create_no_out_from_file(base_path + value['create_script'])
+        init_script = self.config.get_property('database')['init_script']
+        self.execute_create_no_out_from_file(init_script)
 
     def insert_transaction(self, amount, description, recipient, date_input, installment, category, priority, automatic,
                            method, account, tags):
-        # todo ampliare l'insert per tenere conto di tutte le colonne e delle foreign keys
         if self.cursor is None:
             self.open_connection()
 
@@ -154,7 +153,9 @@ class Database:
         transactions = self.cursor.fetchall()
 
         if as_dataframe:
-            return pd.DataFrame(data=transactions, columns=["id", "amount", "description", "recipient", "date", "installment", "category", "priority", "automatic", "method", "account", "tags"]).drop(
+            return pd.DataFrame(data=transactions,
+                                columns=["id", "amount", "description", "recipient", "date", "installment", "category",
+                                         "priority", "automatic", "method", "account", "tags"]).drop(
                 columns=["id"])
         else:
             return transactions
@@ -164,5 +165,5 @@ class Database:
             self.open_connection()
 
         query = 'DELETE FROM transactions WHERE id=?'
-        params = (int(id_row)+1,)
+        params = (int(id_row) + 1,)
         self.execute_query_no_out(query=query, params=params)

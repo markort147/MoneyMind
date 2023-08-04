@@ -1,6 +1,6 @@
 import datetime
 import pandas as pd
-from src.database.Database import Database
+from database.sqlite_repository import Database
 
 
 def add_transaction(database):
@@ -60,17 +60,16 @@ def main():
 
         if choice == "1":
             add_transaction(db)
-        if choice == "2":
+        elif choice == "2":
             transactions = db.get_all_transactions(as_dataframe=True)
             pd.set_option('display.max_columns', None)
             print(transactions.to_string())
-        if choice == "3":
+        elif choice == "3":
             id_row = input("ID: ")
             db.remove_transaction(id_row)
         elif choice == "0":
             print("Ciao ciao :)")
             db.close_connection()
-            break
         else:
             print("Scelta non valida. Riprova.")
 
