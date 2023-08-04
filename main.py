@@ -1,47 +1,119 @@
+import re
 import datetime
 import pandas as pd
 from database.sqlite_repository import Database
 
 
 def add_transaction(database):
-    amount = float(input("Amount: "))
+    while True:
+        amount = input("Amount (max 3 decimals): ")
+        pattern = r'^[\d]*((\.[0-9]{0,3})|([0-9]{0,3}))$'
+        if re.match(pattern, amount) is not None:
+            amount = float(amount)
+            print("\tInserted amount: {:.3f}".format(amount))
+            break
+        else:
+            print("\tInvalid format!")
+
     description = input("Description: ")
-    recipient = input("Recipient: ")
-    date_input = input("Date (YYYY-MM-DD): ")
-    installment = input("Installment: ")
-    category = input("Category: ")
-    priority = input("Priority: ")
-    automatic = input("Automatic: ")
-    method = input("Method: ")
-    account = input("Account: ")
-    tags = input("Tags (semicolon delimiter): ")
+    print("\tInserted description: {}".format(description))
 
-    if description == '':
-        description = ''
+    while True:
+        recipient = input("Recipient (not empty): ")
+        if recipient == '':
+            print("\tInvalid recipient!")
+        else:
+            print("\tInserted recipient: {}".format(recipient))
+            break
 
-    if date_input == '':
-        date_input = datetime.date.today().strftime("%Y-%m-%d")
+    while True:
+        date_input = input("Date (YYYY-MM-DD): ")
+        if date_input == '':
+            date_input = datetime.date.today().strftime("%Y-%m-%d")
+        try:
+            datetime.datetime.strptime(date_input, '%Y-%m-%d').date()
+            print("\tInserted date: {}".format(date_input))
+            break
+        except ValueError:
+            print("\tInvalid format!")
 
-    if installment == '':
-        installment = 0
-    else:
-        installment = int(installment)
+    while True:
+        installment = input("Installment ([0]/1): ")
 
-    if priority == '':
-        priority = 'Voluntary'
+        if installment == '':
+            installment = '0'
 
-    if automatic == '':
-        automatic = 0
-    else:
-        automatic = int(automatic)
+        if installment in ('0', '1'):
+            installment = int(installment)
+            print("\tInserted installment: {}".format(installment))
+            break
+        else:
+            print("\tInvalid installment!")
 
-    try:
-        datetime.datetime.strptime(date_input, '%Y-%m-%d').date()
-    except ValueError:
-        print("Data non valida. Utilizzare il formato YYYY-MM-DD.")
-        return
+    while True:
+        category = input("Category (not empty): ")
+        if category == '':
+            print("\tInvalid category!")
+        else:
+            print("\tInserted category: {}".format(category))
+            break
 
-    database.insert_transaction(amount, description, recipient, date_input, installment, category, priority, automatic, method, account, tags)
+    while True:
+        priority = input("Priority ([(V)oluntary]/(N)eed/(M)andatory: ")
+
+        if priority in ('', 'V'):
+            priority = 'Voluntary'
+        elif priority == 'N':
+            priority = 'Need'
+        elif priority == 'M':
+            priority = 'Mandatory'
+
+        if priority in ('Voluntary', 'Need', 'Mandatory'):
+            print("\tInserted priority: {}".format(priority))
+            break
+        else:
+            print("\tInvalid priority!")
+
+    while True:
+        automatic = input("Automatic ([0]/1): ")
+
+        if automatic == '':
+            automatic = '0'
+
+        if automatic in ('0', '1'):
+            automatic = int(automatic)
+            print("\tInserted automatic: {}".format(automatic))
+            break
+        else:
+            print("\tInvalid automatic!")
+
+    while True:
+        method = input("Method (not empty): ")
+        if method == '':
+            print("\tInvalid method!")
+        else:
+            print("\tInserted method: {}".format(method))
+            break
+
+    while True:
+        account = input("Account (not empty): ")
+        if account == '':
+            print("\tInvalid account!")
+        else:
+            print("\tInserted account: {}".format(account))
+            break
+
+    while True:
+        tags = input("Tags (semicolon delimiter): ")
+        pattern = r'^(|[\w]+|[\w]+(;[\w]+)*)$'
+        if re.match(pattern, tags) is not None:
+            print("\tInserted tags: {:.3f}".format(amount))
+            break
+        else:
+            print("\tInvalid format!")
+
+    database.insert_transaction(amount, description, recipient, date_input, installment, category, priority, automatic,
+                                method, account, tags)
     print("Success!")
 
 
