@@ -1,116 +1,100 @@
 import re
 import datetime
 import pandas as pd
+from core import transactions
 from database.sqlite_repository import Database
+
+LIT_INVALID_INPUT = 'Invalid input. {}'
 
 
 def add_transaction(database):
     while True:
         amount = input("Amount (max 3 decimals): ")
-        pattern = r'^[\d]*((\.[0-9]{0,3})|([0-9]{0,3}))$'
-        if re.match(pattern, amount) is not None:
-            amount = float(amount)
-            print("\tInserted amount: {:.3f}".format(amount))
+        try:
+            amount = transactions.validate_amount(amount)
             break
-        else:
-            print("\tInvalid format!")
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
-    description = input("Description: ")
-    print("\tInserted description: {}".format(description))
+    while True:
+        description = input("Description: ")
+        try:
+            description = transactions.validate_description(description)
+            break
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         recipient = input("Recipient (not empty): ")
-        if recipient == '':
-            print("\tInvalid recipient!")
-        else:
-            print("\tInserted recipient: {}".format(recipient))
+        try:
+            recipient = transactions.validate_recipient(recipient)
             break
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         date_input = input("Date (YYYY-MM-DD): ")
-        if date_input == '':
-            date_input = datetime.date.today().strftime("%Y-%m-%d")
         try:
-            datetime.datetime.strptime(date_input, '%Y-%m-%d').date()
-            print("\tInserted date: {}".format(date_input))
+            date_input = transactions.validate_date(date_input)
             break
-        except ValueError:
-            print("\tInvalid format!")
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         installment = input("Installment ([0]/1): ")
-
-        if installment == '':
-            installment = '0'
-
-        if installment in ('0', '1'):
-            installment = int(installment)
-            print("\tInserted installment: {}".format(installment))
+        try:
+            installment = transactions.validate_installment(installment)
             break
-        else:
-            print("\tInvalid installment!")
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         category = input("Category (not empty): ")
-        if category == '':
-            print("\tInvalid category!")
-        else:
-            print("\tInserted category: {}".format(category))
+        try:
+            category = transactions.validate_category(category)
             break
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         priority = input("Priority ([(V)oluntary]/(N)eed/(M)andatory: ")
-
-        if priority in ('', 'V'):
-            priority = 'Voluntary'
-        elif priority == 'N':
-            priority = 'Need'
-        elif priority == 'M':
-            priority = 'Mandatory'
-
-        if priority in ('Voluntary', 'Need', 'Mandatory'):
-            print("\tInserted priority: {}".format(priority))
+        try:
+            priority = transactions.validate_priority(priority)
             break
-        else:
-            print("\tInvalid priority!")
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         automatic = input("Automatic ([0]/1): ")
-
-        if automatic == '':
-            automatic = '0'
-
-        if automatic in ('0', '1'):
-            automatic = int(automatic)
-            print("\tInserted automatic: {}".format(automatic))
+        try:
+            automatic = transactions.validate_automatic(automatic)
             break
-        else:
-            print("\tInvalid automatic!")
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         method = input("Method (not empty): ")
-        if method == '':
-            print("\tInvalid method!")
-        else:
-            print("\tInserted method: {}".format(method))
+        try:
+            method = transactions.validate_method(method)
             break
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         account = input("Account (not empty): ")
-        if account == '':
-            print("\tInvalid account!")
-        else:
-            print("\tInserted account: {}".format(account))
+        try:
+            account = transactions.validate_account(account)
             break
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     while True:
         tags = input("Tags (semicolon delimiter): ")
-        pattern = r'^(|[\w]+|[\w]+(;[\w]+)*)$'
-        if re.match(pattern, tags) is not None:
-            print("\tInserted tags: {}".format(tags))
+        try:
+            tags = transactions.validate_tags(tags)
             break
-        else:
-            print("\tInvalid format!")
+        except ValueError as e:
+            print(LIT_INVALID_INPUT.format(e))
 
     database.insert_transaction(amount, description, recipient, date_input, installment, category, priority, automatic,
                                 method, account, tags)
@@ -123,10 +107,10 @@ def main():
 
     while True:
         print("\nMenu:")
-        print("1. Aggiungi transazione")
-        print("2. Visualizza transazioni")
-        print("3. Rimuovi transazione")
-        print("0. Esci")
+        print("1. Insert transaction")
+        print("2. View all transactions")
+        print("3. Delete transaction")
+        print("0. Exit")
 
         choice = input("Scelta: ")
 
@@ -138,13 +122,15 @@ def main():
             print(transactions.to_string())
         elif choice == "3":
             id_row = input("ID: ")
+            print("\tDeleting transaction with ID: {}".format(id_row))
             db.remove_transaction(id_row)
         elif choice == "0":
-            print("Ciao ciao :)")
+            print("Bye bye :)")
             db.close_connection()
+            input("\n(press ENTER to close the window)")
             break
         else:
-            print("Scelta non valida. Riprova.")
+            print("Invalid option. Try again. :)")
 
 
 if __name__ == "__main__":

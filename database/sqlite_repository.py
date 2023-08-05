@@ -114,7 +114,6 @@ class Database:
                     self.cursor.execute(query, params)
                     tag_id = self.cursor.lastrowid
                 tag_id_list.append(str(tag_id))
-            tag_id_string = ';'.join(tag_id_list)
 
         # insert transaction
         if len(tags) > 0:
@@ -155,8 +154,7 @@ class Database:
         if as_dataframe:
             return pd.DataFrame(data=transactions,
                                 columns=["id", "amount", "description", "recipient", "date", "installment", "category",
-                                         "priority", "automatic", "method", "account", "tags"]).drop(
-                columns=["id"])
+                                         "priority", "automatic", "method", "account", "tags"])
         else:
             return transactions
 
@@ -165,5 +163,5 @@ class Database:
             self.open_connection()
 
         query = 'DELETE FROM transactions WHERE id=?'
-        params = (int(id_row) + 1,)
+        params = (int(id_row),)
         self.execute_query_no_out(query=query, params=params)

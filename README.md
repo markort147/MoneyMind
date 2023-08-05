@@ -8,12 +8,7 @@ A simple Python app to manage own finances
   - config.py
 - core/
   - \_\_init\_\_.py
-  - transaction.py
-  - category.py
-  - recipient.py
-  - account.py
-  - tag.py
-  - transaction_repository.py
+  - transactions.py
 - database/
   - \_\_init\_\_.py
   - sqlite_repository.py

@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     date DATE NOT NULL,
     installment INTEGER CHECK (installment IN (0, 1)),
     category INTEGER NOT NULL,
-    priority TEXT CHECK (priority IN ('Mandatory', 'Need', 'Voluntary')),
+    priority TEXT CHECK (priority IN ('mandatory', 'needed', 'voluntary')),
     automatic INTEGER CHECK (automatic IN (0, 1)),
     method INTEGER NOT NULL,
     account INTEGER NOT NULL,
