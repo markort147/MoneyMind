@@ -8,7 +8,6 @@ class Config:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(Config, cls).__new__(cls)
-            cls._instance.load_config()
         return cls._instance
 
     def load_config(self):
@@ -23,6 +22,3 @@ class Config:
 
     def get_property(self, property_name):
         return self.config_data[property_name]
-
-    def get_database_file(self):
-        return self.get_property('database')['file']

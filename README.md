@@ -1,7 +1,7 @@
 # MoneyMind
 A simple Python app to manage own finances
 
-# Package Directory Structure
+## Package Directory Structure
 
 - config/
   - \_\_init\_\_.py
@@ -17,11 +17,13 @@ A simple Python app to manage own finances
     - init.sql 
   - config.yaml
   - sqlite3.db
+- logs/ - _to be created_
 - ui/
   - \_\_init\_\_.py
   - command_line.py
 - utils/
   - \_\_init\_\_.py
-  - pandas_utils.py
+  - pandas_utils.py - _to be created_
 - tests/
 - main.py
+- MoneyMind_win.bat
