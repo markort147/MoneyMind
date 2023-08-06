@@ -17,18 +17,19 @@ A simple Python app to manage own finances
     - init.sql 
   - config.yaml
   - sqlite3.db
-- logs/ - _to be created_
+- logs/ - _will be automatically created when logging is introduced_
 - ui/
   - \_\_init\_\_.py
   - command_line.py
 - utils/
   - \_\_init\_\_.py
-  - pandas_utils.py - _to be created_
+  - pandas_utils.py - _to be created to handle complex queries and visualizations_
 - tests/
 - main.py
 - MoneyMind_win.bat
 
 ## to-do list
+- logging using the built-in logging module 
 - import and export into CSV
 - description column for each transaction field
 - split transactions in expenses and earnings - should common fields  share the same database table?
