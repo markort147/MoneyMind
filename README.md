@@ -27,3 +27,13 @@ A simple Python app to manage own finances
 - tests/
 - main.py
 - MoneyMind_win.bat
+
+## to-do list
+- import and export into CSV
+- description column for each transaction field
+- split transactions in expenses and earnings - should common fields  share the same database table?
+- add credits, debts, loan, interest and scheduled payments - and a feature that predicts future assets trends
+- admin mode to alter database configuration by loading custom scripts at runtime
+- use pandas instead of SQL joins/unions for complex queries, in order to have a specific database independent approach
+- plots visualization from command line using matplotlib and some graphic library TBD
+- finally, an interactive UI - leaving the possibility to switch into command line mode at runtime 
