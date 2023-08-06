@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TABLE IF NOT EXISTS accounts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     account_name VARCHAR(255) NOT NULL
@@ -12,8 +13,7 @@ CREATE TABLE IF NOT EXISTS methods (
 );
 CREATE TABLE IF NOT EXISTS recipients (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    recipient_name VARCHAR(255) NOT NULL--,
-    --recipient_type VARCHAR(255)
+    recipient_name VARCHAR(255) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS tags (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,3 +67,4 @@ LEFT JOIN accounts a ON t.account = a.id
 LEFT JOIN transaction_tags tt ON t.id = tt.id_transaction
 LEFT JOIN tags tg ON tt.id_tag = tg.id
 GROUP BY t.id;
+COMMIT;

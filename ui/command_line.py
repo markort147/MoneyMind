@@ -1,19 +1,19 @@
 import pandas as pd
 from core import transactions
-from database.sqlite_repository import Database
 
 LIT_INVALID_INPUT = 'Invalid input. {}.'
 
 
 def main_menu():
-    print("\n***Menu***")
-    print()
-    print("1. Insert transaction")
-    print("2. View all transactions")
-    print("3. Delete transaction")
-    print("0. Exit")
-
     while True:
+        print("\n***Menu***")
+        print()
+        print("1. Insert transaction")
+        print("2. View all transactions")
+        print("3. Delete transaction")
+        print("4. Get all tags")
+        print("0. Exit")
+
         choice = input("\nEnter your choice: ")
 
         if choice == "1":
@@ -22,6 +22,8 @@ def main_menu():
             view_all_transactions(last_view=main_menu)
         elif choice == "3":
             delete_transaction(last_view=main_menu)
+        elif choice == "4":
+            get_all_tags(last_view=main_menu)
         elif choice == "0":
             print("See you next time!")
             input("\n(press ENTER to close the window)")
@@ -34,14 +36,14 @@ def delete_transaction(last_view):
     print("\n***Delete transaction***")
     print()
     id_row = input("Enter ID: ")
-    Database.get_instance().remove_transaction(id_row)
+    transactions.delete_transaction(id_row)
     last_view()
 
 
 def view_all_transactions(last_view):
     print("\n***All transactions***")
     print()
-    transactions_df = Database.get_instance().get_all_transactions(as_dataframe=True)
+    transactions_df = transactions.get_all_transactions(as_dataframe=True)
     pd.set_option('display.max_columns', None)
     print(transactions_df.to_string())
     input("\nPress ENTER to go back")
@@ -72,8 +74,18 @@ def insert_transaction(last_view):
     automatic = ask_for_input("Automatic ([0]/1): ", transactions.validate_automatic)
     tags = ask_for_input("Tags (semicolon delimiter): ", transactions.validate_tags)
 
-    Database.get_instance().insert_transaction(amount, description, recipient, date_input, installment, category,
-                                               priority, automatic,
-                                               method, account, tags)
+    transactions.insert_transaction(amount, description, recipient, date_input, installment, category,
+                                    priority, automatic,
+                                    method, account, tags)
 
+    last_view()
+
+
+def get_all_tags(last_view):
+    print("\n***All tags***")
+    print()
+    tags_df = transactions.get_all_tags(as_dataframe=True)
+    pd.set_option('display.max_columns', None)
+    print(tags_df.to_string())
+    input("\nPress ENTER to go back")
     last_view()

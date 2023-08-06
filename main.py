@@ -7,7 +7,6 @@ def main():
     Config.get_instance().load_config()
     Database.get_instance().initialize_database()
     main_menu()
-    Database.get_instance().close_connection()
 
 
 if __name__ == "__main__":
