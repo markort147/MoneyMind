@@ -31,6 +31,7 @@ A simple Python app to manage own finances
 ## to-do list
 - logging using the built-in logging module 
 - encrypt database using a user-side password
+- in command line UI: add a flow - max 10 elements - to let the user go back to previous menu
 - import and export into CSV
 - description column for each transaction field
 - split transactions in expenses and earnings - should common fields  share the same database table?
