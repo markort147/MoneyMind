@@ -14,6 +14,8 @@
 
 import re
 import datetime
+
+from config.config import Config
 from database.sqlite_repository import Database
 import pandas as pd
 
@@ -210,7 +212,7 @@ def insert_transaction(amount, description, recipient, date_input, installment, 
 
 
 def get_all_transactions(as_dataframe=False):
-    transactions = Database.get_instance().execute_select(table='transactions', get_first=False)
+    transactions = Database.get_instance().execute_select(table='transactions_view', get_first=False)
 
     if as_dataframe:
         return pd.DataFrame(data=transactions,
@@ -232,3 +234,38 @@ def get_all_tags(as_dataframe=False):
         return pd.DataFrame(data=tags, columns=["id", "tag_name"])
     else:
         return tags
+
+
+def get_all_categories(as_dataframe=False):
+    categories = Database.get_instance().execute_select(table='categories', get_first=False)
+
+    if as_dataframe:
+        return pd.DataFrame(data=categories, columns=["id", "category_name"])
+    else:
+        return categories
+
+
+def import_from_file(format_file):
+    import_properties = Config.get_instance().get_property('import')
+    if format_file == 'csv':
+        csv_file = import_properties['csv_file']
+        df = pd.read_csv(csv_file, dtype=str)
+        df.fillna('', inplace=True)
+        # print(df.to_string())
+        for index, row in df.iterrows():
+            try:
+                amount = validate_amount(row['amount'])
+                description = validate_description(row['description'])
+                recipient = validate_recipient(row['recipient'])
+                date_input = validate_date(row['date'])
+                installment = validate_installment(row['installment'])
+                category = validate_category(row['category'])
+                priority = validate_priority(row['priority'])
+                automatic = validate_automatic(row['automatic'])
+                method = validate_method(row['method'])
+                account = validate_account(row['account'])
+                tags = validate_tags(row['tags'])
+                insert_transaction(amount, description, recipient, date_input, installment, category, priority,
+                                   automatic, method, account, tags)
+            except ValueError as e:
+                raise ValueError('Error while inserting transaction {}: {}.'.format(index, str(e)))

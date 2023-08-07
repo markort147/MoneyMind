@@ -12,6 +12,8 @@ def main_menu():
         print("2. View all transactions")
         print("3. Delete transaction")
         print("4. Get all tags")
+        print("5. Get all categories")
+        print("6. Import transactions from csv file")
         print("0. Exit")
 
         choice = input("\nEnter your choice: ")
@@ -24,12 +26,23 @@ def main_menu():
             delete_transaction(last_view=main_menu)
         elif choice == "4":
             get_all_tags(last_view=main_menu)
+        elif choice == "5":
+            get_all_categories(last_view=main_menu)
+        elif choice == "6":
+            import_transactions_from_csv(last_view=main_menu)
         elif choice == "0":
             print("See you next time!")
             input("\n(press ENTER to close the window)")
             return
         else:
             print("Invalid option!")
+
+
+def import_transactions_from_csv(last_view):
+    print("\n***Import transactions from csv file***")
+    print()
+    transactions.import_from_file(format_file='csv')
+    last_view()
 
 
 def delete_transaction(last_view):
@@ -87,5 +100,15 @@ def get_all_tags(last_view):
     tags_df = transactions.get_all_tags(as_dataframe=True)
     pd.set_option('display.max_columns', None)
     print(tags_df.to_string())
+    input("\nPress ENTER to go back")
+    last_view()
+
+
+def get_all_categories(last_view):
+    print("\n***All categories***")
+    print()
+    categories_df = transactions.get_all_categories(as_dataframe=True)
+    pd.set_option('display.max_columns', None)
+    print(categories_df.to_string())
     input("\nPress ENTER to go back")
     last_view()
