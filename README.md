@@ -41,4 +41,4 @@ A simple Python app to manage own finances
   - to backup and restore .db file
 - use pandas instead of SQL joins/unions for complex queries, in order to have a specific database independent approach
 - plots visualization from command line using matplotlib and some graphic library TBD
-- finally, an interactive UI - leaving the possibility to switch into command line mode at runtime 
+- finally, an interactive UI webapp using Dash and Plotly - leaving the possibility to switch into command line mode at runtime 
