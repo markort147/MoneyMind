@@ -20,5 +20,13 @@ class Config:
             cls._instance = Config()
         return cls._instance
 
-    def get_property(self, property_name):
-        return self.config_data[property_name]
+    def get_property(self, property_name, _data=None):
+        if _data is None:
+            data = self.config_data
+        else:
+            data = _data
+        if '.' not in property_name:
+            return data[property_name]
+        else:
+            keys = property_name.split('.')
+            return self.get_property(property_name='.'.join(keys[1:]), _data=data[keys[0]])

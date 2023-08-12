@@ -4,7 +4,7 @@ from core import transactions
 LIT_INVALID_INPUT = 'Invalid input. {}.'
 
 
-def main_menu():
+def start():
     while True:
         print("\n***Menu***")
         print()
@@ -19,17 +19,17 @@ def main_menu():
         choice = input("\nEnter your choice: ")
 
         if choice == "1":
-            insert_transaction(last_view=main_menu)
+            insert_transaction(last_view=start)
         elif choice == "2":
-            view_all_transactions(last_view=main_menu)
+            view_all_transactions(last_view=start)
         elif choice == "3":
-            delete_transaction(last_view=main_menu)
+            delete_transaction(last_view=start)
         elif choice == "4":
-            get_all_tags(last_view=main_menu)
+            get_all_tags(last_view=start)
         elif choice == "5":
-            get_all_categories(last_view=main_menu)
+            get_all_categories(last_view=start)
         elif choice == "6":
-            import_transactions_from_csv(last_view=main_menu)
+            import_transactions_from_csv(last_view=start)
         elif choice == "0":
             print("See you next time!")
             input("\n(press ENTER to close the window)")

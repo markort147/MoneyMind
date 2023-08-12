@@ -246,9 +246,8 @@ def get_all_categories(as_dataframe=False):
 
 
 def import_from_file(format_file):
-    import_properties = Config.get_instance().get_property('import')
     if format_file == 'csv':
-        csv_file = import_properties['csv_file']
+        csv_file = Config.get_instance().get_property('import.csv_file')
         df = pd.read_csv(csv_file, dtype=str)
         df.fillna('', inplace=True)
         # print(df.to_string())

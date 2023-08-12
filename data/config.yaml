@@ -4,3 +4,9 @@ database:
 
 import:
   csv_file: './data/import/transactions.csv'
+
+ui: 'dash'
+
+dash:
+  debug: true
+  port: 8085
