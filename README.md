@@ -20,7 +20,12 @@ A simple Python app to manage own finances
 - logs/ - _will be automatically created when logging is introduced_
 - ui/
   - \_\_init\_\_.py
-  - command_line.py
+  - command_line/
+    - main_menu.py
+  - dash_ui/
+    - graphs_page.py
+    - home_page.py
+    - new_transaction.py
 - utils/
   - \_\_init\_\_.py
   - pandas_utils.py - _to be created to handle complex queries and visualizations_
