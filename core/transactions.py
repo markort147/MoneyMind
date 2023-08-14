@@ -19,7 +19,7 @@ from config.config import Config
 from database.sqlite_repository import Database
 import pandas as pd
 
-REGEX_AMOUNT = r'^[\d]*((\.\d{0,3})|(\d))'
+REGEX_AMOUNT = r'^[\d]*((\.\d{0,3})|(\d))$'
 FORMAT_DATE = '%Y-%m-%d'
 ENUM_INSTALLMENT = ['0', '1', '']
 ENUM_PRIORITY = ['voluntary', 'needed', 'mandatory', 'v', 'n', 'm', '']
@@ -54,6 +54,7 @@ def _validate_enum(enum_list, value):
 
 
 def validate_amount(amount):
+    print("Validating amount: {}".format(amount))
     if _validate_regex(REGEX_AMOUNT, amount):
         return float(amount)
     else:

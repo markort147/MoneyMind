@@ -1,6 +1,6 @@
 from dash import Dash, html, dcc, callback, Output, Input, State
 from config.config import Config
-from ui.dash_ui import graphs_page
+from ui.dash_ui import graphs_page, new_transaction
 import dash_bootstrap_components as dbc
 
 
@@ -11,6 +11,8 @@ import dash_bootstrap_components as dbc
 def change_page(pathname):
     if pathname == '/graphs':
         return graphs_page.display_page()
+    if pathname == '/new-transaction':
+        return new_transaction.display_page()
     else:
         return display_page()
 
@@ -18,7 +20,12 @@ def change_page(pathname):
 def display_page():
     return html.Div([
         html.H1('MONEYMIND', style={'textAlign': 'center'}),
-        html.H2('I like the smell of nickel in the morning', style={'textAlign': 'center'}),
+        html.H2('Don\'t you like the smell of nickel in the morning?', style={'textAlign': 'center'}),
+        html.Br(),
+        html.Div([
+            dcc.Link('New transaction', href='/new-transaction', id='link-to-new-transaction'),
+        ], style={'textAlign': 'center'}),
+        html.Br(),
         html.Div([
             dcc.Link('Graphs', href='/graphs', id='link-to-graphs')
         ], style={'textAlign': 'center'})
