@@ -7,7 +7,7 @@ from core import transactions
 def display_page():
     categories = transactions.get_all_categories(as_dataframe=True)['category_name'].sort_values().unique()
     tags = transactions.get_all_tags(as_dataframe=True)['tag_name'].sort_values().unique()
-    transactions_df = transactions.get_all_transactions(as_dataframe=True);
+    transactions_df = transactions.get_all_transactions(as_dataframe=True)
 
     return html.Div([
         dcc.Store(id='transactions-store'),

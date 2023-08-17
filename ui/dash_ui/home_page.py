@@ -1,6 +1,6 @@
 from dash import Dash, html, dcc, callback, Output, Input, State
 from config.config import Config
-from ui.dash_ui import graphs_page, new_transaction
+from ui.dash_ui import graphs_page, new_transaction, show_transactions
 import dash_bootstrap_components as dbc
 
 
@@ -13,6 +13,8 @@ def change_page(pathname):
         return graphs_page.display_page()
     if pathname == '/new-transaction':
         return new_transaction.display_page()
+    if pathname == '/show-transactions':
+        return show_transactions.display_page()
     else:
         return display_page()
 
@@ -24,6 +26,10 @@ def display_page():
         html.Br(),
         html.Div([
             dcc.Link('New transaction', href='/new-transaction', id='link-to-new-transaction'),
+        ], style={'textAlign': 'center'}),
+        html.Br(),
+        html.Div([
+            dcc.Link('See transactions', href='/show-transactions', id='link-to-show-transactions'),
         ], style={'textAlign': 'center'}),
         html.Br(),
         html.Div([
